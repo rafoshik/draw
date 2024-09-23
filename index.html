@@ -130,26 +130,32 @@
             let remainingCat2 = category2.slice();
             let remainingCat3 = category3.slice();
 
+            // החלטה אם רבקה ומיכל יהיו יחד (75% סיכוי)
             if (randomValue < 0.75) {
-                // 75% סיכוי שרבקה ומיכל יהיו באותה קבוצה
-                group1.push(rivka, michal);
-
-                // הסרתן מהרשימות הנותרות
-                remainingCat1 = remainingCat1.filter(person => person !== rivka && person !== michal);
-
-                // בחירת 0 משתתפים נוספים מקטגוריה 1 לקבוצה 1
-                // הוספת הנותרים מקטגוריה 1 לקבוצה 2
-                group2 = group2.concat(remainingCat1);
-
-                // בדיקה שאורלי לא בקבוצה עם רבקה ומיכל
-                if (group1.includes(orly)) {
-                    // מעבירים את אורלי לקבוצה 2
-                    group1 = group1.filter(person => person !== orly);
-                    group2.push(orly);
+                // החלטה באיזו קבוצה הן יהיו
+                if (Math.random() < 0.5) {
+                    // הן יהיו יחד בקבוצה 1
+                    group1.push(rivka, michal);
+                    remainingCat1 = remainingCat1.filter(person => person !== rivka && person !== michal);
+                    // הוספת משתתפת נוספת מקטגוריה 1 לקבוצה 1, מבלי לכלול את אורלי
+                    let selectedCat1Group1 = getRandomElements(remainingCat1, 1, [orly]);
+                    group1 = group1.concat(selectedCat1Group1);
+                    remainingCat1 = remainingCat1.filter(person => !selectedCat1Group1.includes(person));
+                    // אורלי תעבור לקבוצה 2
+                    group2 = group2.concat(remainingCat1);
+                } else {
+                    // הן יהיו יחד בקבוצה 2
+                    group2.push(rivka, michal);
+                    remainingCat1 = remainingCat1.filter(person => person !== rivka && person !== michal);
+                    // הוספת משתתפת נוספת מקטגוריה 1 לקבוצה 2, מבלי לכלול את אורלי
+                    let selectedCat1Group2 = getRandomElements(remainingCat1, 1, [orly]);
+                    group2 = group2.concat(selectedCat1Group2);
+                    remainingCat1 = remainingCat1.filter(person => !selectedCat1Group2.includes(person));
+                    // אורלי תעבור לקבוצה 1
+                    group1 = group1.concat(remainingCat1);
                 }
-
             } else {
-                // 25% סיכוי שרבקה ומיכל יהיו בקבוצות שונות
+                // רבקה ומיכל יהיו בקבוצות נפרדות
                 if (Math.random() < 0.5) {
                     group1.push(rivka);
                     group2.push(michal);
@@ -157,49 +163,44 @@
                     group1.push(michal);
                     group2.push(rivka);
                 }
-
-                // הסרתן מהרשימות הנותרות
                 remainingCat1 = remainingCat1.filter(person => person !== rivka && person !== michal);
-
-                // בחירת 1 משתתף נוסף מקטגוריה 1 לכל קבוצה
+                // חלוקת הנותרים מקטגוריה 1
                 let selectedCat1Group1 = getRandomElements(remainingCat1, 1);
                 group1 = group1.concat(selectedCat1Group1);
                 remainingCat1 = remainingCat1.filter(person => !selectedCat1Group1.includes(person));
+                group2 = group2.concat(remainingCat1);
+            }
 
-                group2 = group2.concat(remainingCat1); // המשתתף הנותר מקטגוריה 1
-
-                // בדיקה שאורלי לא בקבוצה עם רבקה ומיכל
-                if ((group1.includes(rivka) || group1.includes(michal)) && group1.includes(orly)) {
-                    // מעבירים את אורלי לקבוצה 2
+            // וידוא שאורלי לא בקבוצה עם רבקה ומיכל יחד
+            if ((group1.includes(rivka) && group1.includes(michal) && group1.includes(orly)) ||
+                (group2.includes(rivka) && group2.includes(michal) && group2.includes(orly))) {
+                // מעבירים את אורלי לקבוצה הנגדית
+                if (group1.includes(orly)) {
                     group1 = group1.filter(person => person !== orly);
                     group2.push(orly);
-                } else if ((group2.includes(rivka) || group2.includes(michal)) && group2.includes(orly)) {
-                    // מעבירים את אורלי לקבוצה 1
+                } else {
                     group2 = group2.filter(person => person !== orly);
                     group1.push(orly);
                 }
             }
 
-            // בחירת משתתפים מקטגוריה 2
-            let selectedCat2 = getRandomElements(remainingCat2, 2);
+            // חלוקת קטגוריה 2
+            let selectedCat2 = getRandomElements(category2, 2);
             group1 = group1.concat(selectedCat2);
-            remainingCat2 = remainingCat2.filter(person => !selectedCat2.includes(person));
+            remainingCat2 = category2.filter(person => !selectedCat2.includes(person));
             group2 = group2.concat(remainingCat2);
 
-            // בחירת משתתפים מקטגוריה 3
-            let selectedCat3 = getRandomElements(remainingCat3, 1);
+            // חלוקת קטגוריה 3
+            let selectedCat3 = getRandomElements(category3, 1);
             group1 = group1.concat(selectedCat3);
-            remainingCat3 = remainingCat3.filter(person => !selectedCat3.includes(person));
+            remainingCat3 = category3.filter(person => !selectedCat3.includes(person));
             group2 = group2.concat(remainingCat3);
 
             // וידוא שכל קבוצה מכילה 5 אנשים
-            // אם יש יותר מ-5 אנשים בקבוצה 1, מעבירים אנשים לקבוצה 2
             while (group1.length > 5) {
                 let personToMove = group1.pop();
                 group2.push(personToMove);
             }
-
-            // אם יש פחות מ-5 אנשים בקבוצה 1, מעבירים אנשים מקבוצה 2
             while (group1.length < 5) {
                 let personToMove = group2.pop();
                 group1.push(personToMove);
