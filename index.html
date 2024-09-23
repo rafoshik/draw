@@ -10,14 +10,14 @@
             background-color: #f9f9f9;
         }
         #shuffleButton {
-            padding: 15px 25px;
-            font-size: 18px;
+            padding: 20px 35px;
+            font-size: 24px;
             margin-bottom: 20px;
             cursor: pointer;
         }
         h1, h2 {
             margin-top: 30px;
-            font-size: 24px;
+            font-size: 28px;
         }
         ul {
             list-style-type: none;
@@ -38,9 +38,20 @@
             margin-bottom: 30px;
             animation: pulse 2s infinite;
         }
+        #birthdayMessage .sarah {
+            font-size: 36px;
+            font-weight: bold;
+            display: inline-block;
+            animation: grow 2s infinite;
+        }
         @keyframes pulse {
             0% { transform: scale(1); color: #ff4081; }
             50% { transform: scale(1.1); color: #ff80ab; }
+            100% { transform: scale(1); color: #ff4081; }
+        }
+        @keyframes grow {
+            0% { transform: scale(1); color: #ff4081; }
+            50% { transform: scale(1.4); color: #ff80ab; }
             100% { transform: scale(1); color: #ff4081; }
         }
         /* עיצוב למכשירים ניידים */
@@ -49,11 +60,11 @@
                 margin: 10px;
             }
             #shuffleButton {
-                font-size: 20px;
-                padding: 20px 30px;
+                font-size: 28px;
+                padding: 25px 40px;
             }
             h1, h2 {
-                font-size: 28px;
+                font-size: 32px;
             }
             li {
                 font-size: 24px;
@@ -61,13 +72,16 @@
             #birthdayMessage {
                 font-size: 32px;
             }
+            #birthdayMessage .sarah {
+                font-size: 40px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>תוצאות הגרלה</h1>
 
-    <div id="birthdayMessage">🎉 יום הולדת שמח שרה 40! 🎉</div>
+    <div id="birthdayMessage">🎉 יום הולדת שמח <span class="sarah">שרה</span> 40! 🎉</div>
     
     <button id="shuffleButton">ערבב קבוצות</button>
 
