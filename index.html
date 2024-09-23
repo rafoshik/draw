@@ -6,6 +6,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            direction: rtl;
         }
         #shuffleButton {
             padding: 10px 20px;
@@ -66,7 +67,7 @@
         function shuffleGroups() {
             let randomValue = Math.random();
             let rivka = 'רבקה';
-            let maayan = 'מעיין';
+            let michal = 'מיכל';
 
             let group1 = [];
             let group2 = [];
@@ -76,13 +77,12 @@
             let remainingCat3 = category3.slice();
 
             if (randomValue < 0.75) {
-                // 75% סיכוי שרבקה ומעיין יהיו באותה קבוצה
+                // 75% סיכוי שרבקה ומיכל יהיו באותה קבוצה
                 group1.push(rivka);
-                group1.push(maayan);
+                group1.push(michal);
 
-                // הסרתם מהרשימות הנותרות
-                remainingCat1 = remainingCat1.filter(person => person !== rivka);
-                remainingCat3 = remainingCat3.filter(person => person !== maayan);
+                // הסרתן מהרשימות הנותרות
+                remainingCat1 = remainingCat1.filter(person => person !== rivka && person !== michal);
 
                 // בחירת 1 משתתף נוסף מקטגוריה 1
                 let selectedCat1 = getRandomElements(remainingCat1, 1);
@@ -100,23 +100,22 @@
 
             } else {
                 // 25% סיכוי שהם יהיו בקבוצות שונות
-                // החלטה אקראית מי יהיה באיזו קבוצה
+                // החלטה אקראית מי תהיה באיזו קבוצה
                 if (Math.random() < 0.5) {
-                    // רבקה בקבוצה 1, מעיין בקבוצה 2
+                    // רבקה בקבוצה 1, מיכל בקבוצה 2
                     group1.push(rivka);
-                    group2.push(maayan);
+                    group2.push(michal);
                 } else {
-                    // מעיין בקבוצה 1, רבקה בקבוצה 2
-                    group1.push(maayan);
+                    // מיכל בקבוצה 1, רבקה בקבוצה 2
+                    group1.push(michal);
                     group2.push(rivka);
                 }
 
-                // הסרתם מהרשימות הנותרות
-                remainingCat1 = remainingCat1.filter(person => person !== rivka);
-                remainingCat3 = remainingCat3.filter(person => person !== maayan);
+                // הסרתן מהרשימות הנותרות
+                remainingCat1 = remainingCat1.filter(person => person !== rivka && person !== michal);
 
-                // בחירת 2 משתתפים מקטגוריה 1 לקבוצה 1
-                let selectedCat1Group1 = getRandomElements(remainingCat1, 2);
+                // בחירת 1 משתתף נוסף מקטגוריה 1 לקבוצה 1
+                let selectedCat1Group1 = getRandomElements(remainingCat1, 1);
                 group1 = group1.concat(selectedCat1Group1);
                 remainingCat1 = remainingCat1.filter(person => !selectedCat1Group1.includes(person));
 
@@ -124,6 +123,11 @@
                 let selectedCat2Group1 = getRandomElements(remainingCat2, 2);
                 group1 = group1.concat(selectedCat2Group1);
                 remainingCat2 = remainingCat2.filter(person => !selectedCat2Group1.includes(person));
+
+                // בחירת 1 משתתף מקטגוריה 3 לקבוצה 1
+                let selectedCat3Group1 = getRandomElements(remainingCat3, 1);
+                group1 = group1.concat(selectedCat3Group1);
+                remainingCat3 = remainingCat3.filter(person => !selectedCat3Group1.includes(person));
 
                 // קבוצה 1 מכילה 5 אנשים
                 // קבוצה 2 מקבלת את השאר
