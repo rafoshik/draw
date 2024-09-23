@@ -7,28 +7,67 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             direction: rtl;
+            background-color: #f9f9f9;
         }
         #shuffleButton {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 15px 25px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            cursor: pointer;
         }
-        h2 {
+        h1, h2 {
             margin-top: 30px;
+            font-size: 24px;
         }
         ul {
             list-style-type: none;
             padding-left: 0;
         }
         li {
-            background: #f0f0f0;
-            margin: 5px 0;
-            padding: 8px;
-            border-radius: 4px;
+            background: #e0e0e0;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 20px;
+        }
+        /* אנימציה של יום הולדת */
+        #birthdayMessage {
+            font-size: 28px;
+            color: #ff4081;
+            text-align: center;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); color: #ff4081; }
+            50% { transform: scale(1.1); color: #ff80ab; }
+            100% { transform: scale(1); color: #ff4081; }
+        }
+        /* עיצוב למכשירים ניידים */
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+            #shuffleButton {
+                font-size: 20px;
+                padding: 20px 30px;
+            }
+            h1, h2 {
+                font-size: 28px;
+            }
+            li {
+                font-size: 24px;
+            }
+            #birthdayMessage {
+                font-size: 32px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>תוצאות הגרלה</h1>
+
+    <div id="birthdayMessage">🎉 יום הולדת שמח שרה 40! 🎉</div>
     
     <button id="shuffleButton">ערבב קבוצות</button>
 
